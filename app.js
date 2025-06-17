@@ -12,10 +12,14 @@ app.get('/', async (req, res) => {
     const db = client.db('testdb');
     res.send('Connected to MongoDB!');
   } catch (e) {
+    console.error(e);
     res.send('Error connecting to MongoDB');
   } finally {
     await client.close();
   }
 });
 
-app.listen(port, () => console.log(`App running on http://localhost:${port}`));
+// Bind to 0.0.0.0 so it's publicly accessible
+app.listen(port, '0.0.0.0', () => {
+  console.log(`App running on http://0.0.0.0:${port}`);
+});
